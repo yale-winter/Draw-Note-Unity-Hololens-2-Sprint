@@ -27,6 +27,13 @@ public class DrawNoteCore : MonoBehaviour
     public Color[] colorSwatches = new Color[5];
     public Color drawColor = Color.white;
 
+    public SmallDrawingHUD instanceSmallDrawingHUD;
+
+    private void Start()
+    {
+        instanceSmallDrawingHUD.SetVisibility(drawing, true);
+    }
+
     private enum DrawNoteType
     {
         /// <summary>
@@ -54,6 +61,8 @@ public class DrawNoteCore : MonoBehaviour
             transform.position = CameraCache.Main.transform.position;
             transform.rotation = CameraCache.Main.transform.rotation;
         }
+
+        instanceSmallDrawingHUD.SetVisibility(drawing);
 
         if (drawing)
         {
