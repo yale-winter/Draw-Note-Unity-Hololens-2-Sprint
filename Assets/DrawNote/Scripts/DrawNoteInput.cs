@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class DrawNoteInput : MonoBehaviour
 {
     DrawNoteCore instanceDNC;
@@ -9,27 +11,70 @@ public class DrawNoteInput : MonoBehaviour
     {
         instanceDNC = transform.GetComponent<DrawNoteCore>();
     }
-    public void MenuButtonPressed(string buttonName)
+
+    public enum DrawNoteAction
     {
-        Debug.Log($"Menu button pressed: {buttonName}");
-        switch (buttonName)
+        None,
+        Draw,
+        StopDraw,
+        White,
+        Red,
+        Yellow,
+        Green,
+        Undo
+    }
+    public void DrawNoteActionTaken(int setActionInt)
+    {
+        DrawNoteAction instanceAction = (DrawNoteAction)setActionInt;
+        Debug.Log($"DrawNoteActionTaken: {instanceAction}");
+
+        switch (instanceAction)
         {
-            case "Draw":
+            case DrawNoteAction.Draw:
                 instanceDNC.drawing = true;
                 break;
-            case "StopDraw":
+            case DrawNoteAction.StopDraw:
                 if (instanceDNC.drawing)
                 {
                     instanceDNC.drawing = false;
                     instanceDNC.curDrawIndex += 1;
                 }
                 break;
-            case "Color0":
+            case DrawNoteAction.White:
                 instanceDNC.UpdateColor(0);
                 break;
-            case "Color1":
+            case DrawNoteAction.Red:
                 instanceDNC.UpdateColor(1);
                 break;
+            case DrawNoteAction.Yellow:
+                instanceDNC.UpdateColor(2);
+                break;
+            case DrawNoteAction.Green:
+                instanceDNC.UpdateColor(3);
+                break;
+            case DrawNoteAction.Undo:
+                instanceDNC.Undo();
+                break;
+        }
+    }
+    public void Update()
+    {
+        /// temporary keyboard debug
+        if (Input.GetKeyUp(KeyCode.H))
+        {
+            DrawNoteActionTaken(7);
+        }
+        if (Input.GetKeyUp(KeyCode.J))
+        {
+            DrawNoteActionTaken(3);
+        }
+        if (Input.GetKeyUp(KeyCode.K))
+        {
+            DrawNoteActionTaken(4);
+        }
+        if (Input.GetKeyUp(KeyCode.L))
+        {
+            DrawNoteActionTaken(2);
         }
     }
 }

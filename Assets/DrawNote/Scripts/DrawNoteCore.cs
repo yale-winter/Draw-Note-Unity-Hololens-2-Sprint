@@ -1,14 +1,14 @@
 using Microsoft.MixedReality.Toolkit;
 using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.Utilities;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class DrawNoteCore : MonoBehaviour
 {
-    public bool drawing = false;
+    // ADD "clear" voice command
+
+    public bool drawing = true;
     private float startTime = Mathf.Infinity;
 
     // draw targets (create one new draw target while drawing, or for color switch)
@@ -16,21 +16,26 @@ public class DrawNoteCore : MonoBehaviour
     private Transform drawingsParent;
     public GameObject drawNoteTarget;
     public MeshCollider drawPlane;
+
     [Tooltip("Current drawing and all saved drawings.")]
-    private List<GameObject> drawNoteTargets = new List<GameObject>();
+    public List<GameObject> drawNoteTargets = new List<GameObject>();
+    [Tooltip("Compare to drawNoteTargets matching index to see if it has any actual visible drawing in it.")]
+    public List<bool> drawNoteExists = new List<bool>();
     [Tooltip("The index location in drawNoteTargets where you are currently or about to draw in.")]
     public int curDrawIndex = 0;
 
     // temp debug visual objects
+    /*
     public GameObject tempDebugObj;
     private GameObject instanceTempDebugObj;
+    */
 
     private MixedRealityPose pose;
 
 
     public Material drawMaterial;
     public Color[] colorSwatches = new Color[5];
-    public Color color = Color.white;
+    public Color drawColor = Color.white;
 
 
     void Start()
@@ -38,9 +43,11 @@ public class DrawNoteCore : MonoBehaviour
         startTime = Time.time;
 
         // temp debug object to indicate drawing location
+        /*
         instanceTempDebugObj = Instantiate(tempDebugObj);
         instanceTempDebugObj.transform.name = "Temp Debug Object";
         instanceTempDebugObj.transform.localScale = new Vector3(0.05F, 0.05F, 0.05F);
+        */
     }
 
     private enum DrawNoteType
@@ -89,6 +96,12 @@ public class DrawNoteCore : MonoBehaviour
     }
     private void TryDrawNote(DrawNoteType instanceType)
     {
+        // confirm any wrist is detected
+        if (HandJointUtils.TryGetJointPose(TrackedHandJoint.Wrist, Handedness.Any, out pose) == false)
+        {
+            return;
+        }
+
         bool foundDrawPositon = false;
         Vector3 drawPosition = Vector3.zero;
         foreach (var source in CoreServices.InputSystem.DetectedInputSources)
@@ -100,27 +113,21 @@ public class DrawNoteCore : MonoBehaviour
                     // only get far hand pointers
                     if (p is IMixedRealityNearPointer)
                     {
-                        break;
+                        continue;
                     }
                     if (p.Result != null)
                     {
                         var startPoint = p.Position;
                         var endPoint = p.Result.Details.Point;
                         var hitObject = p.Result.Details.Object;
-                        if (hitObject && endPoint != Vector3.zero)
+                        if (hitObject)
                         {
-                            // confirm any wrist is detected
-                            if (HandJointUtils.TryGetJointPose(TrackedHandJoint.Wrist, Handedness.Any, out pose) == false)
-                            {
-                                break;
-                            }
-
                             // settings for draw note type
                             if (instanceType == DrawNoteType.DrawPlane)
                             {
                                 if (hitObject.transform.name != "DrawPlane")
                                 {
-                                    break;
+                                    continue;
                                 }
                             }
 
@@ -139,29 +146,58 @@ public class DrawNoteCore : MonoBehaviour
                 newDrawTarget.transform.name = "NewDrawTarget(" + drawNoteTargets.Count + ")";
                 newDrawTarget.transform.parent = drawingsParent;
                 Material newMat = new Material(drawMaterial);
-                newMat.color = color;
+                newMat.color = drawColor;
                 newDrawTarget.transform.GetChild(0).GetComponent<TrailRenderer>().material = newMat;
                 drawNoteTargets.Add(newDrawTarget);
+                drawNoteExists.Add(false);
             }
             if (drawNoteTargets[curDrawIndex] != null)
             {
                 drawNoteTargets[curDrawIndex].transform.position = drawPosition;
-                instanceTempDebugObj.transform.position = drawPosition;
+                drawNoteExists[curDrawIndex] = true;
+                //instanceTempDebugObj.transform.position = drawPosition;
             }
         }
     }
+
+
+    // unit 
+    // in MVC model don't test... Test controller
+    // engi is responsible for unit test (80%+ - 90% unit test coverage) ... either you have to test whole app or test with unit tests
+    // C# unit testing library (run without unity) DrawNoteCore.cs .. mock it in different scenerios (catch errors show text that would make sense for user) .. dont need to actual interact with enviornment.. ex. when function is called returns correct thing
+    // test for updatecolor ... call updatecolor(pass in number)... changes the draw color.... can you assert that whatever object you gave would be correctly applied
+    // use diagrams
     public void UpdateColor(int setColor)
     {
+        Debug.Log("updating color: " + setColor);
         // set future color to be picked when making a new Draw Note Target
-        color = colorSwatches[setColor];
+        drawColor = colorSwatches[setColor];
 
+        // start new drawing if object instance has not been created for this color
+        if (curDrawIndex < drawNoteTargets.Count)
+        {
+            curDrawIndex += 1;
+        }
+
+        drawing = true;
+        /*
         // update current color if already drawing
         Material newMat = new Material(drawMaterial); 
-        newMat.color = color;
+        newMat.color = drawColor;
         if (curDrawIndex < drawNoteTargets.Count)
         {
             drawNoteTargets[curDrawIndex].transform.GetChild(0).GetComponent<TrailRenderer>().material = newMat;
         }
+        */
 
+    }
+    public void Undo()
+    {
+        if (drawing)
+        {
+            drawing = false;
+            curDrawIndex += 1;
+        }
+        Debug.Log("undo");
     }
 }
