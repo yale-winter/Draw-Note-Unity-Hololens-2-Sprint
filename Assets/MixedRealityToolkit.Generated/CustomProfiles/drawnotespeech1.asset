@@ -93,3 +93,10 @@ MonoBehaviour:
       id: 0
       description: Toggle Diagnostics
       axisConstraint: 0
+  - localizationKey: 
+    keyword: Clear
+    keyCode: 0
+    action:
+      id: 0
+      description: Toggle Diagnostics
+      axisConstraint: 0

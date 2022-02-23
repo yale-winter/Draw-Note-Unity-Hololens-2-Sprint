@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-
 
 public class DrawNoteInput : MonoBehaviour
 {
@@ -10,8 +6,8 @@ public class DrawNoteInput : MonoBehaviour
     void Awake()
     {
         instanceDNC = transform.GetComponent<DrawNoteCore>();
+        
     }
-
     public enum DrawNoteAction
     {
         None,
@@ -21,8 +17,14 @@ public class DrawNoteInput : MonoBehaviour
         Red,
         Yellow,
         Green,
-        Undo
+        Undo,
+        Clear
     }
+    /// <summary>
+    /// setActionInt param is same as DrawNoteAction enum, for reference:
+    /// 0 None, 1 Draw, 2 StopDraw, 3 White, 4 Red, 5 Yellow, 6 Green, 7 Undo, 8 Clear
+    /// </summary>
+    /// <param name="setActionInt"></param>
     public void DrawNoteActionTaken(int setActionInt)
     {
         DrawNoteAction instanceAction = (DrawNoteAction)setActionInt;
@@ -55,6 +57,9 @@ public class DrawNoteInput : MonoBehaviour
             case DrawNoteAction.Undo:
                 instanceDNC.Undo();
                 break;
+            case DrawNoteAction.Clear:
+                instanceDNC.Clear();
+                break;
         }
     }
     public void Update()
@@ -73,6 +78,22 @@ public class DrawNoteInput : MonoBehaviour
             DrawNoteActionTaken(4);
         }
         if (Input.GetKeyUp(KeyCode.L))
+        {
+            DrawNoteActionTaken(2);
+        }
+        if (Input.GetKeyUp(KeyCode.M))
+        {
+            DrawNoteActionTaken(7);
+        }
+        if (Input.GetKeyUp(KeyCode.N))
+        {
+            DrawNoteActionTaken(8);
+        }
+        if (Input.GetKeyUp(KeyCode.B))
+        {
+            DrawNoteActionTaken(1);
+        }
+        if (Input.GetKeyUp(KeyCode.V))
         {
             DrawNoteActionTaken(2);
         }

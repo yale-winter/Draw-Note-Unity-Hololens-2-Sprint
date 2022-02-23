@@ -6,10 +6,7 @@ using UnityEngine;
 
 public class DrawNoteCore : MonoBehaviour
 {
-    // ADD "clear" voice command
-
     public bool drawing = true;
-    private float startTime = Mathf.Infinity;
 
     // draw targets (create one new draw target while drawing, or for color switch)
     // save seperately to undo and redo draw last
@@ -17,32 +14,18 @@ public class DrawNoteCore : MonoBehaviour
     public GameObject drawNoteTarget;
     public MeshCollider drawPlane;
 
+    [SerializeField]
     [Tooltip("Current drawing and all saved drawings.")]
-    public List<GameObject> drawNoteTargets = new List<GameObject>();
-    [Tooltip("Compare to drawNoteTargets matching index to see if it has any actual visible drawing in it.")]
-    public List<bool> drawNoteExists = new List<bool>();
+    private List<DrawNoteTargetModel> drawNoteTargets = new List<DrawNoteTargetModel>();
+
     [Tooltip("The index location in drawNoteTargets where you are currently or about to draw in.")]
     public int curDrawIndex = 0;
 
-    // temp debug visual objects
-    /*
-    public GameObject tempDebugObj;
-    private GameObject instanceTempDebugObj;
-    */
-
     private MixedRealityPose pose;
-
 
     public Material drawMaterial;
     public Color[] colorSwatches = new Color[5];
     public Color drawColor = Color.white;
-
-
-    void Start()
-    {
-        startTime = Time.time;
-
-    }
 
     private enum DrawNoteType
     {
@@ -136,19 +119,18 @@ public class DrawNoteCore : MonoBehaviour
         {
             while (drawNoteTargets.Count <= curDrawIndex)
             {
-                GameObject newDrawTarget = Instantiate(drawNoteTarget);
-                newDrawTarget.transform.name = "NewDrawTarget(" + drawNoteTargets.Count + ")";
-                newDrawTarget.transform.parent = drawingsParent;
+                GameObject instanceDrawTargetGO = Instantiate(drawNoteTarget);
+                instanceDrawTargetGO.transform.name = "NewDrawTarget(" + drawNoteTargets.Count + ")";
+                instanceDrawTargetGO.transform.parent = drawingsParent;
                 Material newMat = new Material(drawMaterial);
                 newMat.color = drawColor;
-                newDrawTarget.transform.GetChild(0).GetComponent<TrailRenderer>().material = newMat;
-                drawNoteTargets.Add(newDrawTarget);
-                drawNoteExists.Add(false);
+                instanceDrawTargetGO.transform.GetChild(0).GetComponent<TrailRenderer>().material = newMat;
+                DrawNoteTargetModel instanceDNTM = new DrawNoteTargetModel(drawNoteTargets.Count, false, instanceDrawTargetGO);
+                drawNoteTargets.Add(instanceDNTM);
             }
             if (drawNoteTargets[curDrawIndex] != null)
             {
-                drawNoteTargets[curDrawIndex].transform.position = drawPosition;
-                drawNoteExists[curDrawIndex] = true;
+                drawNoteTargets[curDrawIndex].instanceGameObject.transform.position = drawPosition;
             }
         }
     }
@@ -157,16 +139,13 @@ public class DrawNoteCore : MonoBehaviour
 
     public void UpdateColor(int setColor)
     {
-        Debug.Log("updating color: " + setColor);
         // set future color to be picked when making a new Draw Note Target
         drawColor = colorSwatches[setColor];
-
         // start new drawing if object instance has not been created for this color
         if (curDrawIndex < drawNoteTargets.Count)
         {
             curDrawIndex += 1;
         }
-
         drawing = true;
     }
     public void Undo()
@@ -176,6 +155,23 @@ public class DrawNoteCore : MonoBehaviour
             drawing = false;
             curDrawIndex += 1;
         }
-        Debug.Log("undo");
+        for (int i = drawNoteTargets.Count - 1; i >= 0; i--)
+        {
+            if (drawNoteTargets[i].instanceGameObject.activeSelf)
+            {
+               drawNoteTargets[i].instanceGameObject.SetActive(false);
+                break;
+            }
+        }
+    }
+    public void Clear()
+    {
+        drawing = false;
+        for (int i = 0; i < drawNoteTargets.Count; i++)
+        {
+            Destroy(drawNoteTargets[i].instanceGameObject);
+        }
+        drawNoteTargets.Clear();
+        curDrawIndex = 0;
     }
 }
