@@ -42,12 +42,6 @@ public class DrawNoteCore : MonoBehaviour
     {
         startTime = Time.time;
 
-        // temp debug object to indicate drawing location
-        /*
-        instanceTempDebugObj = Instantiate(tempDebugObj);
-        instanceTempDebugObj.transform.name = "Temp Debug Object";
-        instanceTempDebugObj.transform.localScale = new Vector3(0.05F, 0.05F, 0.05F);
-        */
     }
 
     private enum DrawNoteType
@@ -155,18 +149,12 @@ public class DrawNoteCore : MonoBehaviour
             {
                 drawNoteTargets[curDrawIndex].transform.position = drawPosition;
                 drawNoteExists[curDrawIndex] = true;
-                //instanceTempDebugObj.transform.position = drawPosition;
             }
         }
     }
 
 
-    // unit 
-    // in MVC model don't test... Test controller
-    // engi is responsible for unit test (80%+ - 90% unit test coverage) ... either you have to test whole app or test with unit tests
-    // C# unit testing library (run without unity) DrawNoteCore.cs .. mock it in different scenerios (catch errors show text that would make sense for user) .. dont need to actual interact with enviornment.. ex. when function is called returns correct thing
-    // test for updatecolor ... call updatecolor(pass in number)... changes the draw color.... can you assert that whatever object you gave would be correctly applied
-    // use diagrams
+
     public void UpdateColor(int setColor)
     {
         Debug.Log("updating color: " + setColor);
@@ -180,16 +168,6 @@ public class DrawNoteCore : MonoBehaviour
         }
 
         drawing = true;
-        /*
-        // update current color if already drawing
-        Material newMat = new Material(drawMaterial); 
-        newMat.color = drawColor;
-        if (curDrawIndex < drawNoteTargets.Count)
-        {
-            drawNoteTargets[curDrawIndex].transform.GetChild(0).GetComponent<TrailRenderer>().material = newMat;
-        }
-        */
-
     }
     public void Undo()
     {
