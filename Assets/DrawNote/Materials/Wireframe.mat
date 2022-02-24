@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: transpurple
+  m_Name: Wireframe
   m_Shader: {fileID: 4800000, guid: 5c1653eb4e20b76499141de7bc57c063, type: 3}
   m_ShaderKeywords: _DIRECTIONAL_LIGHT _DISABLE_ALBEDO_MAP _HOVER_LIGHT _REFLECTIONS
     _SPECULAR_HIGHLIGHTS

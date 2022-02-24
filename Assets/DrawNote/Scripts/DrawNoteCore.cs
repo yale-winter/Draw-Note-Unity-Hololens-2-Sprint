@@ -6,13 +6,23 @@ using UnityEngine;
 
 public class DrawNoteCore : MonoBehaviour
 {
+
     public bool drawing = true;
 
     // draw targets (create one new draw target while drawing, or for color switch)
     // save seperately to undo and redo draw last
     private Transform drawingsParent;
     public GameObject drawNoteTarget;
-    public MeshCollider drawPlane;
+
+    /// <summary>
+    /// Default target drawing distance is 64 centimeters away (approx average human arm length) from the User's head,
+    /// DrawPlane GameObject's center is set to 1 meter away with a depth/thickness of 72 centimeters (to more safely catch raycast)
+    /// So if the User draws directly in the middle of where their looking, that ray would hit the collider at 36 centimeters distance away
+    /// With elbow slightly bent and arm in a comfortable position the drawing should display just in front of that
+    /// Drawing on a plane that is translated like this is probably the easiest way to make accurate drawings with your hand,
+    /// As it delegates one axis to translate the drawing input on (from the Hand, to User's head position and rotation)
+    /// </summary>
+    public BoxCollider drawPlane;
 
     [SerializeField]
     [Tooltip("Current drawing and all saved drawings.")]
@@ -24,13 +34,15 @@ public class DrawNoteCore : MonoBehaviour
     private MixedRealityPose pose;
 
     public Material drawMaterial;
-    public Color[] colorSwatches = new Color[5];
+    public Color[] colorSwatches = new Color[4];
     public Color drawColor = Color.white;
 
     public SmallDrawingHUD instanceSmallDrawingHUD;
 
     private void Start()
     {
+        instanceSmallDrawingHUD.SetColorBlockOptions(colorSwatches);
+        instanceSmallDrawingHUD.SetColorSelectedIndicator(drawColor);
         instanceSmallDrawingHUD.SetVisibility(drawing, true);
     }
 
@@ -80,6 +92,10 @@ public class DrawNoteCore : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// Try to Draw a Note provided The User's MRTK2 Hand pointer's are hitting the objective hit location for the DrawNoteType specified
+    /// </summary>
+    /// <param name="instanceType"></param>
     private void TryDrawNote(DrawNoteType instanceType)
     {
         // confirm any wrist is detected
@@ -144,8 +160,6 @@ public class DrawNoteCore : MonoBehaviour
         }
     }
 
-
-
     public void UpdateColor(int setColor)
     {
         // set future color to be picked when making a new Draw Note Target
@@ -156,7 +170,12 @@ public class DrawNoteCore : MonoBehaviour
             curDrawIndex += 1;
         }
         drawing = true;
+        // update seslected color on Small Drawing HUD
+        instanceSmallDrawingHUD.SetColorSelectedIndicator(drawColor);
     }
+    /// <summary>
+    /// Deactivate the most recent drawing
+    /// </summary>
     public void Undo()
     {
         if (drawing)
@@ -169,10 +188,14 @@ public class DrawNoteCore : MonoBehaviour
             if (drawNoteTargets[i].instanceGameObject.activeSelf)
             {
                drawNoteTargets[i].instanceGameObject.SetActive(false);
-                break;
+               // only undo 1 object at a time
+               break;
             }
         }
     }
+    /// <summary>
+    /// Destroy all drawings
+    /// </summary>
     public void Clear()
     {
         drawing = false;

@@ -1,11 +1,28 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SmallDrawingHUD : MonoBehaviour
 {
     public GameObject drawingNowMenu;
     public GameObject drawingDetails;
     private bool lastSet = true;
+    public Image[] bigColorBlocks = new Image[2];
+    public Image[] smallColorBlocks = new Image[4];
 
+    public void SetColorBlockOptions(Color[] setColors)
+    {
+        for (int i = 0; i < smallColorBlocks.Length; i++)
+        {
+            smallColorBlocks[i].color = setColors[i];
+        }
+    }
+    public void SetColorSelectedIndicator(Color setColor)
+    {
+        for (int i = 0; i < bigColorBlocks.Length; i++)
+        {
+            bigColorBlocks[i].color = setColor;
+        }
+    }
     public void SetVisibility(bool drawingNow, bool forceUpdate = false)
     {
         if (lastSet != drawingNow || forceUpdate)
