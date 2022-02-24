@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class SmallDrawingHUD : MonoBehaviour
 {
@@ -8,7 +9,12 @@ public class SmallDrawingHUD : MonoBehaviour
     private bool lastSet = true;
     public Image[] bigColorBlocks = new Image[2];
     public Image[] smallColorBlocks = new Image[4];
-
+    public TextMeshProUGUI modeText;
+    public void SetModeText(string setText)
+    {
+        string displayText = "Mode: " + setText;
+        modeText.text = displayText;
+    }
     public void SetColorBlockOptions(Color[] setColors)
     {
         for (int i = 0; i < smallColorBlocks.Length; i++)

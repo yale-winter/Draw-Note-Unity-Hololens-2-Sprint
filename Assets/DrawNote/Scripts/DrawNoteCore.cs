@@ -1,12 +1,12 @@
 using Microsoft.MixedReality.Toolkit;
 using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.Utilities;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DrawNoteCore : MonoBehaviour
 {
-
     public bool drawing = true;
 
     // draw targets (create one new draw target while drawing, or for color switch)
@@ -15,12 +15,12 @@ public class DrawNoteCore : MonoBehaviour
     public GameObject drawNoteTarget;
 
     /// <summary>
-    /// Default target drawing distance is 64 centimeters away (approx average human arm length) from the User's head,
+    /// Default target drawing distance is 64 centimeters away (approx average human arm length) from the User,
     /// DrawPlane GameObject's center is set to 1 meter away with a depth/thickness of 72 centimeters (to more safely catch raycast)
-    /// So if the User draws directly in the middle of where their looking, that ray would hit the collider at 36 centimeters distance away
-    /// With elbow slightly bent and arm in a comfortable position the drawing should display just in front of that
-    /// Drawing on a plane that is translated like this is probably the easiest way to make accurate drawings with your hand,
-    /// As it delegates one axis to translate the drawing input on (from the Hand, to User's head position and rotation)
+    /// So if the User draws directly in the middle of where their looking, that ray would hit the collider at 36 centimeters away
+    /// With the User's arm in a comfortable position the drawing should display just in front of that
+    /// Drawing on a plane like this is probably the easiest way to make accurate drawings with your hand (similar to drawing on paper)
+    /// It delegates a part of determining the drawing's translation input from the the User's Hand, to head position and rotation
     /// </summary>
     public BoxCollider drawPlane;
 
@@ -30,6 +30,11 @@ public class DrawNoteCore : MonoBehaviour
 
     [Tooltip("The index location in drawNoteTargets where you are currently or about to draw in.")]
     public int curDrawIndex = 0;
+
+    /// <summary>
+    /// Mode to draw notes (Normal, Mesh, etc....)
+    /// </summary>
+    public DrawNoteType curMode;
 
     private MixedRealityPose pose;
 
@@ -44,26 +49,23 @@ public class DrawNoteCore : MonoBehaviour
         instanceSmallDrawingHUD.SetColorBlockOptions(colorSwatches);
         instanceSmallDrawingHUD.SetColorSelectedIndicator(drawColor);
         instanceSmallDrawingHUD.SetVisibility(drawing, true);
+        instanceSmallDrawingHUD.SetModeText(curMode.ToString());
     }
 
-    private enum DrawNoteType
+    public enum DrawNoteType
     {
         /// <summary>
-        /// Draw only on draw plane with hand and only if it is first object (collider) hit.
+        /// Draw only on draw plane with hand
         /// </summary>
-        DrawPlane,
+        Normal,
         /// <summary>
-        /// Draw only on not draw plane with hand. Includes drawing on menus.
+        /// Draw only on meshes with hand. Includes drawing on menus
         /// </summary>
-        NotDrawPlane,
+        Mesh,
         /// <summary>
-        /// Draw only on draw plane with hand even if it's behind other objects (colliders).
+        /// Draw exactly from your index finger's point without raycasting against planes or meshes
         /// </summary>
-        ForceDrawPlane,
-        /// <summary>
-        /// Draw on real world meshes, and any object with a collider that is not a menu and not draw plane.
-        /// </summary>
-        ForceNotDrawPlaneNotMenus
+        Finger
     }
     void Update()
     {
@@ -76,13 +78,20 @@ public class DrawNoteCore : MonoBehaviour
 
         instanceSmallDrawingHUD.SetVisibility(drawing);
 
+        // show draw plane
+        bool showDrawPlane = false;
+        if (drawing && curMode == DrawNoteType.Normal)
+        {
+            showDrawPlane = true;
+        }
+        if (drawPlane.enabled != showDrawPlane)
+        {
+            drawPlane.enabled = showDrawPlane;
+        }
+
         if (drawing)
         {
-            if (!drawPlane.enabled)
-            {
-                drawPlane.enabled = true;
-            }
-            TryDrawNote(DrawNoteType.DrawPlane);
+            TryDrawNote(curMode);
         }
         else
         {
@@ -98,7 +107,7 @@ public class DrawNoteCore : MonoBehaviour
     /// <param name="instanceType"></param>
     private void TryDrawNote(DrawNoteType instanceType)
     {
-        // confirm any wrist is detected
+        // confirm any wrist is detected to draw
         if (HandJointUtils.TryGetJointPose(TrackedHandJoint.Wrist, Handedness.Any, out pose) == false)
         {
             return;
@@ -106,35 +115,58 @@ public class DrawNoteCore : MonoBehaviour
 
         bool foundDrawPositon = false;
         Vector3 drawPosition = Vector3.zero;
-        foreach (var source in CoreServices.InputSystem.DetectedInputSources)
-        {
-            if (source.SourceType == InputSourceType.Hand)
-            {
-                foreach (var p in source.Pointers)
-                {
-                    // only get far hand pointers
-                    if (p is IMixedRealityNearPointer)
-                    {
-                        continue;
-                    }
-                    if (p.Result != null)
-                    {
-                        var startPoint = p.Position;
-                        var endPoint = p.Result.Details.Point;
-                        var hitObject = p.Result.Details.Object;
-                        if (hitObject)
-                        {
-                            // settings for draw note type
-                            if (instanceType == DrawNoteType.DrawPlane)
-                            {
-                                if (hitObject.transform.name != "DrawPlane")
-                                {
-                                    continue;
-                                }
-                            }
 
-                            foundDrawPositon = true;
-                            drawPosition = endPoint;
+        // if drawing from finger just find the object
+        if (curMode == DrawNoteType.Finger)
+        {
+            if (HandJointUtils.TryGetJointPose(TrackedHandJoint.IndexTip, Handedness.Any, out pose))
+            {
+                foundDrawPositon = true;
+                drawPosition = pose.Position;
+            }
+        }
+        else
+        {
+            // foreach below adapted from Julia Schwarz stack overflow
+            foreach (var source in CoreServices.InputSystem.DetectedInputSources)
+            {
+                if (source.SourceType == InputSourceType.Hand)
+                {
+                    foreach (var p in source.Pointers)
+                    {
+                        // only get far hand pointers not close
+                        if (p is IMixedRealityNearPointer)
+                        {
+                            continue;
+                        }
+                        if (p.Result != null)
+                        {
+                            var startPoint = p.Position;
+                            var endPoint = p.Result.Details.Point;
+                            var hitObject = p.Result.Details.Object;
+                            if (hitObject)
+                            {
+                                // settings for draw note type
+                                if (instanceType == DrawNoteType.Normal)
+                                {
+                                    if (hitObject.transform.name != "DrawPlane")
+                                    {
+                                        continue;
+                                    }
+                                    // redundancy to double check as the draw plane should not be active in the scene
+                                }
+                                else if (instanceType == DrawNoteType.Mesh)
+                                {
+                                    if (hitObject.transform.name == "DrawPlane")
+                                    {
+                                        continue;
+                                    }
+                                }
+
+                                foundDrawPositon = true;
+                                drawPosition = endPoint;
+                                break;
+                            }
                         }
                     }
                 }
@@ -187,9 +219,9 @@ public class DrawNoteCore : MonoBehaviour
         {
             if (drawNoteTargets[i].instanceGameObject.activeSelf)
             {
-               drawNoteTargets[i].instanceGameObject.SetActive(false);
-               // only undo 1 object at a time
-               break;
+                drawNoteTargets[i].instanceGameObject.SetActive(false);
+                // only undo 1 object at a time
+                break;
             }
         }
     }
@@ -205,5 +237,14 @@ public class DrawNoteCore : MonoBehaviour
         }
         drawNoteTargets.Clear();
         curDrawIndex = 0;
+    }
+    public void SwitchMode()
+    {
+        curMode++;
+        if ((int)curMode >= Enum.GetNames(typeof(DrawNoteType)).Length)
+        {
+            curMode = 0;
+        }
+        instanceSmallDrawingHUD.SetModeText(curMode.ToString());
     }
 }

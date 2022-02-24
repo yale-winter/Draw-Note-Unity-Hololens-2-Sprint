@@ -4,7 +4,7 @@ public class DrawNoteInput : MonoBehaviour
 {
     DrawNoteCore instanceDNC;
     private float lastActionTime = 0.0F;
-    private float dontAllowActionBufferTime = 0.2F;
+    private float dontAllowActionBufferTime = 1.5F;
     void Awake()
     {
         instanceDNC = transform.GetComponent<DrawNoteCore>();
@@ -71,6 +71,7 @@ public class DrawNoteInput : MonoBehaviour
                 instanceDNC.Clear();
                 break;
             case DrawNoteAction.Mode:
+                instanceDNC.SwitchMode();
                 break;
         }
     }
@@ -92,7 +93,7 @@ public class DrawNoteInput : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.M))
         {
-            DrawNoteActionTaken(7);
+            DrawNoteActionTaken(9);
         }
         if (Input.GetKeyUp(KeyCode.N))
         {
