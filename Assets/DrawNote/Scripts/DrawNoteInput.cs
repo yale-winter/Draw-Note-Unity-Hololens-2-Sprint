@@ -3,6 +3,8 @@ using UnityEngine;
 public class DrawNoteInput : MonoBehaviour
 {
     DrawNoteCore instanceDNC;
+    private float lastActionTime = 0.0F;
+    private float dontAllowActionBufferTime = 0.2F;
     void Awake()
     {
         instanceDNC = transform.GetComponent<DrawNoteCore>();
@@ -18,15 +20,23 @@ public class DrawNoteInput : MonoBehaviour
         Yellow,
         Green,
         Undo,
-        Clear
+        Clear,
+        Mode
     }
     /// <summary>
     /// setActionInt param is same as DrawNoteAction enum, for reference:
-    /// 0 None, 1 Draw, 2 StopDraw, 3 White, 4 Red, 5 Yellow, 6 Green, 7 Undo, 8 Clear
+    /// 0 None, 1 Draw, 2 StopDraw, 3 White, 4 Red, 5 Yellow, 6 Green, 7 Undo, 8 Clear, 9 Mode
     /// </summary>
     /// <param name="setActionInt"></param>
     public void DrawNoteActionTaken(int setActionInt)
     {
+        // dont allow quick double clicks by mistake
+        if (lastActionTime > Time.time - dontAllowActionBufferTime)
+        {
+            return;
+        }
+        lastActionTime = Time.time;
+
         DrawNoteAction instanceAction = (DrawNoteAction)setActionInt;
         Debug.Log($"DrawNoteActionTaken: {instanceAction}");
 
@@ -60,15 +70,14 @@ public class DrawNoteInput : MonoBehaviour
             case DrawNoteAction.Clear:
                 instanceDNC.Clear();
                 break;
+            case DrawNoteAction.Mode:
+                break;
         }
     }
+#if UNITY_EDITOR
     public void Update()
     {
-        /// temporary keyboard debug
-        if (Input.GetKeyUp(KeyCode.H))
-        {
-            DrawNoteActionTaken(7);
-        }
+        /// temporary editor keyboard debug hotkeys
         if (Input.GetKeyUp(KeyCode.J))
         {
             DrawNoteActionTaken(3);
@@ -98,4 +107,5 @@ public class DrawNoteInput : MonoBehaviour
             DrawNoteActionTaken(2);
         }
     }
+#endif
 }
