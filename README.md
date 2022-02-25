@@ -20,8 +20,21 @@ There is 3 ways to interact:
 3. The User does a nearby hand interaction, by actually pressing the button with their finger.
 
 There are two Menus that are context dependant:
-Small Note Drawing Menu - Is smaller and is active while the User is drawing. It simply directs the user to say "STOP" to stop, and it has a Stop Button
-Drawing Details Menu - Is larger and is active while the User is not drawing. It contains buttons for all input options listed below.
+1. Small Note Drawing Menu - Is smaller and is active while the User is drawing. It simply directs the user to say "STOP" to stop, and it has a Stop Button
+2. Drawing Details Menu - Is larger and is active while the User is not drawing. It contains buttons for all input options listed below.
+
+| Voice Command | Description |
+| --- | --- |
+| DRAW | List all *new or modified* files |
+| STOP | Show file differences that **haven't been** staged |
+| MODE | Show file differences that **haven't been** staged |
+| UNDO | List all *new or modified* files |
+| CLEAR | Show file differences that **haven't been** staged |
+| DRAW | List all *new or modified* files |
+| WHITE | Show file differences that **haven't been** staged |
+| RED | List all *new or modified* files |
+| YELLOW | Show file differences that **haven't been** staged |
+| GREEN | Show file differences that **haven't been** staged |
 
 ## Implementation:
 
