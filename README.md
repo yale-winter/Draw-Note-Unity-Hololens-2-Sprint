@@ -14,13 +14,16 @@ Draw lines in Augmented Reality on the Hololens 2 with MRTK2 and a variety of fe
 
 The controls in Draw Note are the regular style of Hololens 2 controls. 
 
-There is 3 ways to interact:
+**While drawing:**
+The User holds out arm in front of their body in a comfortable position. In *Normal Mode* the drawing will happen just beyond this.
+The User can move their hand, arm, head, body and look around while continue to draw. Read Drawing Modes later for more details.
 
+**There is 3 ways to interact with buttons:**
 1. The User's Gaze is directed at the Button from a distance, and then they make the Air Tap gesture (focus gaze then right click in emulator)
 2. The User says the Voice Command associated with the button/action ex. "RED", "DRAW", "STOP"
 3. The User does a nearby hand interaction, by actually pressing the button with their finger
 
-There are two Menus that are context dependant:
+**There are two Menus that are context dependant:**
 1. Small Note Drawing Menu - Is smaller and is active while the User is drawing. It simply directs the user to say "STOP" to stop, and it has a Stop Button
 2. Drawing Details Menu - Is larger and is active while the User is not drawing. It contains buttons for all input options listed below.
 
