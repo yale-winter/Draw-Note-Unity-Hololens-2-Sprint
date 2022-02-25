@@ -127,7 +127,7 @@ public class DrawNoteCore : MonoBehaviour
         }
         else
         {
-            // foreach below adapted from Julia Schwarz stack overflow
+            // foreach loop below adapted from Julia Schwarz stack overflow
             foreach (var source in CoreServices.InputSystem.DetectedInputSources)
             {
                 if (source.SourceType == InputSourceType.Hand)
@@ -162,7 +162,6 @@ public class DrawNoteCore : MonoBehaviour
                                         continue;
                                     }
                                 }
-
                                 foundDrawPositon = true;
                                 drawPosition = endPoint;
                                 break;

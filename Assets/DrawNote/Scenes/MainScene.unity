@@ -218,9 +218,12 @@ PrefabInstance:
 
         <b>"CLEAR"</b> - Clear All Drawings
 
+        <b>"MODE"</b>
+        - Change Drawing Mode
 
-        Use
-        These Voice Commands to Choose Your Color To Draw With:
+
+        Use These Voice Commands to Choose Your Color
+        To Draw With:
 
 
         <b>"WHITE"
@@ -269,11 +272,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2652140712778390387, guid: 18470d71939382448be2ecd06efa9662, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.85686696
+      value: 0.910876
       objectReference: {fileID: 0}
     - target: {fileID: 2652140712778390387, guid: 18470d71939382448be2ecd06efa9662, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.3636
+      value: -0.3906
       objectReference: {fileID: 0}
     - target: {fileID: 2894974111286814447, guid: 18470d71939382448be2ecd06efa9662, type: 3}
       propertyPath: m_Enabled
