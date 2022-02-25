@@ -15,9 +15,9 @@ The controls in Draw Note are the regular style of Hololens 2 controls.
 
 There is 3 ways to interact:
 
-1. The User's Gaze is directed at the Button from a distance, and then they make the Air Tap gesture. (focus gaze then right click in emulator)
-2. The User says the Voice Command associated with the button/action ex. "RED", "DRAW", "STOP".
-3. The User does a nearby hand interaction, by actually pressing the button with their finger.
+1. The User's Gaze is directed at the Button from a distance, and then they make the Air Tap gesture (focus gaze then right click in emulator)
+2. The User says the Voice Command associated with the button/action ex. "RED", "DRAW", "STOP"
+3. The User does a nearby hand interaction, by actually pressing the button with their finger
 
 There are two Menus that are context dependant:
 1. Small Note Drawing Menu - Is smaller and is active while the User is drawing. It simply directs the user to say "STOP" to stop, and it has a Stop Button
@@ -49,4 +49,4 @@ Basic implementation outline chart pictured below.
 
 - User Inputs are interpreted by MRTK2 for the correct enviornment
 - Some custom configurations are applied directly to MRTK profile (ex. custom voice inputs)
-- Drawings are stored as a GameObject with a ParticleTrail component attached.
+- Drawings are stored in an Object with a ParticleTrail component
