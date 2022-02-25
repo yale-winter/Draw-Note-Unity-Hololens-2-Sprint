@@ -35,11 +35,15 @@ There are two Menus that are context dependant:
 | YELLOW | Set draw color to yellow |
 | GREEN | Set draw color to Green |
 
+## Drawing Modes:
+
+It's important for the User to understand and switch between the different Drawing Modes to get the expected behavior.
+
 | Drawing Modes | Description |
 | --- | --- |
-| Normal | Start drawing |
-| Mesh | Stop drawing |
-| Finger | Switch drawing mode |
+| Normal | Draw only on draw plane with hand (Ex. you want to write clearly like on a piece of paper) |
+| Mesh | Draw only on meshes with hand (Ex. you want to write on a wall, or floor) |
+| Finger | Draw from your finger (Ex. you want to draw a line exactly from your finger position) |
 
 ## Implementation:
 
