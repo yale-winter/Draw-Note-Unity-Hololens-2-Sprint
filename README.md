@@ -24,8 +24,8 @@ The User can move their hand, arm, head, body and look around while continue to 
 3. The User does a nearby hand interaction, by actually pressing the button with their finger
 
 **There are two Menus that are context dependant:**
-1. Small Note Drawing Menu - Is smaller and is active while the User is drawing. It simply directs the user to say "STOP" to stop, and it has a Stop Button
-2. Drawing Details Menu - Is larger and is active while the User is not drawing. It contains buttons for input options listed below, except STOP.
+- Small Note Drawing Menu - Is smaller and is active while the User is drawing. It simply directs the user to say "STOP" to stop, and it has a Stop Button
+- Drawing Details Menu - Is larger and is active while the User is not drawing. It contains buttons for input options listed below, except STOP
 
 | Voice Command | Description |
 | --- | --- |
