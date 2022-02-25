@@ -53,7 +53,7 @@ It's important for the User to understand and switch between the different Drawi
 
 ![drawnote_implementation_diagram](https://user-images.githubusercontent.com/5803874/155637616-33301d4b-4607-403f-b2fe-3b81429eaaf9.jpg)
 
-- User Inputs are interpreted by MRTK2 for the correct enviornment
+- User Inputs are interpreted by MRTK2 for the correct environment
 - Some custom configurations are applied directly to MRTK profile (Ex. custom voice inputs)
 - Drawings are stored in an Object with a Unity ParticleTrail component (Each saved node of the instance Drawing requires very little storage)
 - Create new drawing Object when starting to draw, or changing colors for easy Undo layers
