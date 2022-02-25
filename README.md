@@ -16,7 +16,7 @@ The controls in Draw Note are the regular style of Hololens 2 controls.
 
 **While drawing:**
 The User holds out arm in front of their body in a comfortable position. In *Normal Mode* the drawing will happen just beyond this.
-The User can move their hand, arm, head, body and look around while continue to draw. Read Drawing Modes later for more details.
+The User can move their hand, arm, head, body and look around while continue to draw. Read **Drawing Modes** later for more details.
 
 **There is 3 ways to interact with buttons:**
 1. The User's Gaze is directed at the Button from a distance, and then they make the Air Tap gesture (focus gaze then right click in emulator)
@@ -25,7 +25,7 @@ The User can move their hand, arm, head, body and look around while continue to 
 
 **There are two Menus that are context dependant:**
 1. Small Note Drawing Menu - Is smaller and is active while the User is drawing. It simply directs the user to say "STOP" to stop, and it has a Stop Button
-2. Drawing Details Menu - Is larger and is active while the User is not drawing. It contains buttons for all input options listed below.
+2. Drawing Details Menu - Is larger and is active while the User is not drawing. It contains buttons for input options listed below, except STOP.
 
 | Voice Command | Description |
 | --- | --- |
