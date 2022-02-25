@@ -53,11 +53,11 @@ It's important for the User to understand and switch between the different Drawi
 
 ![drawnote_implementation_diagram](https://user-images.githubusercontent.com/5803874/155637616-33301d4b-4607-403f-b2fe-3b81429eaaf9.jpg)
 
-- User Inputs are interpreted by MRTK2 for the correct enviornment
+- User Inputs are interpreted by MRTK2 for the correct environment
 - Some custom configurations are applied directly to MRTK profile (Ex. custom voice inputs)
 - Drawings are stored in an Object with a Unity ParticleTrail component (Each saved node of the instance Drawing requires very little storage)
 - Create new drawing Object when starting to draw, or changing colors for easy Undo layers
-- Menu's follow the User and stay within the camera frustum as per Hololens 2 style. They can also be repositioned.
+- Menus follow the User and stay within the camera frustum as per Hololens 2 style. They can also be repositioned
 
 **Draw Plane description (only relevant while using *Normal Mode*):**
 Default target drawing distance is 64 centimeters away (approx average human arm length) from the User. DrawPlane GameObject's center is set to 1 meter away with a depth/thickness of 72 centimeters (to more safely catch raycast). It's position and rotation is always set to be that distance and facing the User. So if the User draws directly in the middle of where their looking, that ray would hit the collider at 64 centimeters away.
