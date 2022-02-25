@@ -4,8 +4,9 @@
 ## Overview:
 Draw lines in Augmented Reality on the Hololens 2 with MRTK2 and a variety of features.
 
-![drawnote4_caption](https://user-images.githubusercontent.com/5803874/155637627-836450b2-05db-421b-8312-846fac8029b2.jpg)
+## Screenshots:
 ![drawnote5_caption](https://user-images.githubusercontent.com/5803874/155637629-c08800d3-f7db-428d-a46d-39c2a2e713db.jpg)
+![drawnote4_caption](https://user-images.githubusercontent.com/5803874/155637627-836450b2-05db-421b-8312-846fac8029b2.jpg)
 ![drawnote1_caption](https://user-images.githubusercontent.com/5803874/155637618-66b3bad0-d822-455b-a620-a2abca995623.jpg)
 ![drawnote2_caption](https://user-images.githubusercontent.com/5803874/155637623-df23a4a5-f941-4b2f-9f1d-e234c88e9626.jpg)
 
