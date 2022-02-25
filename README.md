@@ -25,17 +25,28 @@ There are two Menus that are context dependant:
 
 | Voice Command | Description |
 | --- | --- |
-| DRAW | List all *new or modified* files |
-| STOP | Show file differences that **haven't been** staged |
-| MODE | Show file differences that **haven't been** staged |
-| UNDO | List all *new or modified* files |
-| CLEAR | Show file differences that **haven't been** staged |
-| DRAW | List all *new or modified* files |
-| WHITE | Show file differences that **haven't been** staged |
-| RED | List all *new or modified* files |
-| YELLOW | Show file differences that **haven't been** staged |
-| GREEN | Show file differences that **haven't been** staged |
+| DRAW | Start drawing |
+| STOP | Stop drawing |
+| MODE | Switch drawing mode |
+| UNDO | Undo last drawing |
+| CLEAR | Clear all drawings |
+| WHITE | Set draw color to white |
+| RED | Set draw color to red |
+| YELLOW | Set draw color to yellow |
+| GREEN | Set draw color to Green |
+
+| Drawing Modes | Description |
+| --- | --- |
+| Normal | Start drawing |
+| Mesh | Stop drawing |
+| Finger | Switch drawing mode |
 
 ## Implementation:
 
+Basic implementation outline chart pictured below.
+
 ![drawnote_implementation_diagram](https://user-images.githubusercontent.com/5803874/155637616-33301d4b-4607-403f-b2fe-3b81429eaaf9.jpg)
+
+- User Inputs are interpreted by MRTK2 for the correct enviornment
+- Some custom configurations are applied directly to MRTK profile (ex. custom voice inputs)
+- Drawings are stored as a GameObject with a ParticleTrail component attached.
