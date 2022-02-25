@@ -37,7 +37,7 @@ The User can move their hand, arm, head, body and look around while continue to 
 | WHITE | Set draw color to white |
 | RED | Set draw color to red |
 | YELLOW | Set draw color to yellow |
-| GREEN | Set draw color to Green |
+| GREEN | Set draw color to green |
 
 ### Drawing Modes:
 
@@ -59,4 +59,4 @@ It's important for the User to understand and switch between the different Drawi
 - Create new drawing Object when starting to draw, or changing colors for easy Undo layers
 
 **Draw Plane description (from *Normal Mode*):**
-Default target drawing distance is 64 centimeters away (approx average human arm length) from the User. DrawPlane GameObject's center is set to 1 meter away with a depth/thickness of 72 centimeters (to more safely catch raycast). It's position and rotation is always set to be that distance and facing the User. So if the User draws directly in the middle of where their looking, that ray would hit the collider at 36 centimeters away. With the User's arm in a comfortable position the drawing should display just in front of that. Drawing on a plane like this is probably the easiest way to make accurate drawings with your hand (similar to drawing on paper). It delegates a part of determining the drawing's translation input from the the User's Hand, to head position and rotation
+Default target drawing distance is 64 centimeters away (approx average human arm length) from the User. DrawPlane GameObject's center is set to 1 meter away with a depth/thickness of 72 centimeters (to more safely catch raycast). It's position and rotation is always set to be that distance and facing the User. So if the User draws directly in the middle of where their looking, that ray would hit the collider at 36 centimeters away. With the User's arm in a comfortable position the drawing should display just in front of that. Drawing on a plane like this is probably the easiest way to make accurate drawings with your hand (similar to drawing on paper). It delegates a part of determining the drawing's translation input from the the User's Hand, to head position and rotation.
