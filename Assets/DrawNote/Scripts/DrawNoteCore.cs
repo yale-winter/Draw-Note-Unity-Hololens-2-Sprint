@@ -36,6 +36,7 @@ public class DrawNoteCore : MonoBehaviour
 
     private MixedRealityPose pose;
 
+
     public Material drawMaterial;
     public Color[] colorSwatches = new Color[4];
     public Color drawColor = Color.white;
