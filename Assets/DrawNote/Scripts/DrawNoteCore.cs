@@ -17,10 +17,8 @@ public class DrawNoteCore : MonoBehaviour
     /// <summary>
     /// Default target drawing distance is 64 centimeters away (approx average human arm length) from the User,
     /// DrawPlane GameObject's center is set to 1 meter away with a depth/thickness of 72 centimeters (to more safely catch raycast)
-    /// So if the User draws directly in the middle of where their looking, that ray would hit the collider at 36 centimeters away
+    /// So if the User draws directly in the middle of where their looking, that ray would hit the collider at 64 centimeters away
     /// With the User's arm in a comfortable position the drawing should display just in front of that
-    /// Drawing on a plane like this is probably the easiest way to make accurate drawings with your hand (similar to drawing on paper)
-    /// It delegates a part of determining the drawing's translation input from the the User's Hand, to head position and rotation
     /// </summary>
     public BoxCollider drawPlane;
 
@@ -59,11 +57,11 @@ public class DrawNoteCore : MonoBehaviour
         /// </summary>
         Normal,
         /// <summary>
-        /// Draw only on meshes with hand. Includes drawing on menus
+        /// Draw only on meshes with hand
         /// </summary>
         Mesh,
         /// <summary>
-        /// Draw exactly from your index finger's point without raycasting against planes or meshes
+        /// Draw from your finger
         /// </summary>
         Finger
     }
