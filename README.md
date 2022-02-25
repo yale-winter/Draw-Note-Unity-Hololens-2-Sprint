@@ -1,10 +1,10 @@
 # Draw-Note-Unity-Hololens-2-Sprint
-(C#, Unity3D, Hololens 2, AR, MRTK2, UWP)
+C#, Unity3D, Hololens 2, AR, MRTK2, UWP
 
 ## Overview:
 Draw lines in Augmented Reality on the Hololens 2 with MRTK2 and a variety of features.
 
-## Screenshots:
+### Screenshots:
 ![drawnote5_caption](https://user-images.githubusercontent.com/5803874/155637629-c08800d3-f7db-428d-a46d-39c2a2e713db.jpg)
 ![drawnote4_caption](https://user-images.githubusercontent.com/5803874/155637627-836450b2-05db-421b-8312-846fac8029b2.jpg)
 ![drawnote1_caption](https://user-images.githubusercontent.com/5803874/155637618-66b3bad0-d822-455b-a620-a2abca995623.jpg)
@@ -36,22 +36,20 @@ There are two Menus that are context dependant:
 | YELLOW | Set draw color to yellow |
 | GREEN | Set draw color to Green |
 
-## Drawing Modes:
+### Drawing Modes:
 
 It's important for the User to understand and switch between the different Drawing Modes to get the expected behavior.
 
 | Drawing Modes | Description |
 | --- | --- |
-| Normal | Draw only on draw plane with hand (Ex. you want to write clearly like on a piece of paper) |
-| Mesh | Draw only on meshes with hand (Ex. you want to write on a wall, or floor) |
-| Finger | Draw from your finger (Ex. you want to draw a line exactly from your finger position) |
+| *Normal* | Draw only on draw plane with hand (Ex. you want to write clearly like on a piece of paper) |
+| *Mesh* | Draw only on meshes with hand (Ex. you want to write on a wall, or floor) |
+| *Finger* | Draw from your finger (Ex. you want to draw a line exactly from your finger position) |
 
 ## Implementation:
-
-Basic implementation outline chart pictured below.
 
 ![drawnote_implementation_diagram](https://user-images.githubusercontent.com/5803874/155637616-33301d4b-4607-403f-b2fe-3b81429eaaf9.jpg)
 
 - User Inputs are interpreted by MRTK2 for the correct enviornment
-- Some custom configurations are applied directly to MRTK profile (ex. custom voice inputs)
-- Drawings are stored in an Object with a ParticleTrail component
+- Some custom configurations are applied directly to MRTK profile (Ex. custom voice inputs)
+- Drawings are stored in an Object with a Unity ParticleTrail component (Each saved node of the instance Drawing requires very little storage)
