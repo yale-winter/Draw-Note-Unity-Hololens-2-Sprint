@@ -1,7 +1,7 @@
 # Draw-Note-Unity-Hololens-2-Sprint
-##Draw Note (C#, Unity3D, Hololens 2, AR, MRTK2, UWP)
+## Draw Note (C#, Unity3D, Hololens 2, AR, MRTK2, UWP)
 
-##Draw Note Overview:
+## Draw Note Overview:
 Draw lines in Augmented Reality on the Hololens 2 with MRTK2 and a variety of features.
 
 ![drawnote4_caption](https://user-images.githubusercontent.com/5803874/155637627-836450b2-05db-421b-8312-846fac8029b2.jpg)
@@ -9,7 +9,7 @@ Draw lines in Augmented Reality on the Hololens 2 with MRTK2 and a variety of fe
 ![drawnote1_caption](https://user-images.githubusercontent.com/5803874/155637618-66b3bad0-d822-455b-a620-a2abca995623.jpg)
 ![drawnote2_caption](https://user-images.githubusercontent.com/5803874/155637623-df23a4a5-f941-4b2f-9f1d-e234c88e9626.jpg)
 
-##Draw Note Controls:
+## Draw Note Controls:
 
 The controls in Draw Note are the regular style of Hololens 2 controls. 
 
@@ -23,6 +23,6 @@ There are two Menus that are context dependant:
 Small Note Drawing Menu - Is smaller and is active while the User is drawing. It simply directs the user to say "STOP" to stop, and it has a Stop Button
 Drawing Details Menu - Is larger and is active while the User is not drawing. It contains buttons for all input options listed below.
 
-##Draw Note Implementation:
+## Draw Note Implementation:
 
 ![drawnote_implementation_diagram](https://user-images.githubusercontent.com/5803874/155637616-33301d4b-4607-403f-b2fe-3b81429eaaf9.jpg)
