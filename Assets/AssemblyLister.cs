@@ -8,6 +8,7 @@ public static class AssemblyLister
     public static void PrintAssemblyNames()
 
     {
+#if UNITY_EDITOR
         UnityEngine.Debug.Log("== Player Assemblies ==");
         Assembly[] playerAssemblies =
             CompilationPipeline.GetAssemblies(AssembliesType.Player);
@@ -16,5 +17,6 @@ public static class AssemblyLister
         {
             UnityEngine.Debug.Log(assembly.name);
         }
+#endif
     }
 }
