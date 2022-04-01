@@ -1,4 +1,4 @@
-Attention: This sprint Project was inspired by a 3rd party. Ask me for more details.
+Attention, Disclaimer: This sprint Project was inspired by a 3rd party. Ask me for more details.
 
 # Draw-Note-Unity-Hololens-2-Sprint
 C#, Unity3D, Hololens 2, AR, MRTK2, UWP
