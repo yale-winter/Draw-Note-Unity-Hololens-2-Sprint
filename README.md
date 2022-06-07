@@ -1,7 +1,7 @@
-**Disclaimer:** Not yet tested on a HoloLens 2 (and needs changes.)
-
 # Draw-Note-Unity-Hololens-2-Sprint
 (C#, Unity, HoloLens 2, AR, MRTK2, UWP, HoloLens 2 Emulator)
+
+**Disclaimer:** Not yet tested on a HoloLens 2 (and needs changes.)
 
 ## Overview:
 1 week sprint project for HoloLens 2. Draw lines in Augmented Reality on the Hololens 2 with MRTK2 and a variety of features.
