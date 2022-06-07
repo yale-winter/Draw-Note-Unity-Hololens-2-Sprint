@@ -1,5 +1,5 @@
 # Draw-Note-Unity-Hololens-2-Sprint
-(C#, Unity, HoloLens 2, AR, MRTK2, UWP, HoloLens 2 Emulator)
+(C#, Unity, HoloLens 2, AR, MRTK2, HoloLens 2 Emulator)
 
 **Disclaimer:** Not yet tested on a HoloLens 2 (and needs changes.)
 
