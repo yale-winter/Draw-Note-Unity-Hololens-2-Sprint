@@ -13,7 +13,7 @@ C#, Unity, HoloLens 2, AR, MRTK2, HoloLens 2 Emulator
 ![drawnote2_caption](https://user-images.githubusercontent.com/5803874/155637623-df23a4a5-f941-4b2f-9f1d-e234c88e9626.jpg)
 ![draw_note_poster](https://user-images.githubusercontent.com/5803874/180688684-bf8a05d6-1490-47f1-8542-c1368c6fb1b7.jpg)
 
-^ AI created promotional artwork for Draw Note 
+^ custom AI created promotional artwork for Draw Note 
 
 ## Controls:
 
